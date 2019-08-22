@@ -1,0 +1,96 @@
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - aws:
+          accessKey: "${ACCESS_KEY}"
+          id: "aws"
+          scope: GLOBAL
+          secretKey: "${SECRET_KEY}"
+jenkins:
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: admin
+          password: ${ADMIN_PASSWORD}
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  clouds:
+  - ecs:
+      allowedOverrides: "all"
+      cluster: "${JENKINS_CLUSTER}"
+      credentialsId: "aws"
+      jenkinsUrl: "${JENKINS_URL}"
+      name: "ecs"
+      regionName: "eu-west-2"
+      templates:
+      - assignPublicIp: true
+        cpu: 256
+        image: "jenkins/jnlp-slave"
+        label: "ecs"
+        launchType: "FARGATE"
+        memory: 0
+        memoryReservation: 512
+        networkMode: "awsvpc"
+        privileged: false
+        remoteFSRoot: "/home/jenkins"
+        securityGroups: "${FARGATE_SECURITY_GROUP}"
+        sharedMemorySize: 0
+        subnets: "${FARGATE_SUBNET}"
+        templateName: "ecs"
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  disableRememberMe: false
+  markupFormatter: "plainText"
+  mode: EXCLUSIVE
+  myViewsTabBar: "standard"
+  numExecutors: 2
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: true
+  scmCheckoutRetryCount: 0
+  slaveAgentPort: 50000
+  updateCenter:
+    sites:
+    - id: "default"
+      url: "https://updates.jenkins.io/update-center.json"
+  views:
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+
+unclassified:
+  buildStepOperation:
+    enabled: false
+  gitHubPluginConfig:
+    hookUrl: "${JENKINS_URL}"
+  gitSCM:
+    createAccountBasedOnEmail: false
+  location:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    url: "${JENKINS_URL}"
+  mailer:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    charset: "UTF-8"
+    useSsl: false
+  pollSCM:
+    pollingThreadCount: 10
+  timestamperConfig:
+    allPipelines: true
+    elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
+    systemTimeFormat: "'<b>'HH:mm:ss'</b> '"
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
