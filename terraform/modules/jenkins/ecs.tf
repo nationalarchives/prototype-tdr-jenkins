@@ -12,6 +12,7 @@ data "template_file" "jenkins_template" {
 
   vars = {
     jenkins_image = "${var.task_image}:${var.environment}"
+    container_name = "${var.container_name}-${var.environment}"
     app_environment = var.environment
     role = var.role
     cluster_arn = aws_ecs_cluster.jenkins_cluster.arn
@@ -63,4 +64,13 @@ resource "aws_ecs_service" "jenkins" {
   task_definition                   = aws_ecs_task_definition.jenkins_task.arn
   desired_count                     = 1
   launch_type                       = "EC2"
+  health_check_grace_period_seconds = "360"
+
+  load_balancer {
+    target_group_arn = aws_alb_target_group.jenkins.id
+    container_name   = "${var.container_name}-${var.environment}"
+    container_port   = var.app_port
+  }
+
+  depends_on = [aws_alb_listener.jenkins]
 }

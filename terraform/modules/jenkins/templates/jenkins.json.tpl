@@ -1,6 +1,6 @@
 [
       {
-        "name": "jenkins",
+        "name": "${container_name}",
         "image": "${jenkins_image}",
         "cpu": 0,
         "portMappings": [

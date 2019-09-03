@@ -21,28 +21,28 @@ jenkins:
     loggedInUsersCanDoAnything:
       allowAnonymousRead: false
   clouds:
-  - ecs:
-      allowedOverrides: "all"
-      cluster: "${JENKINS_CLUSTER}"
-      credentialsId: "aws"
-      jenkinsUrl: "${JENKINS_URL}"
-      name: "ecs"
-      regionName: "eu-west-2"
-      templates:
-      - assignPublicIp: true
-        cpu: 256
-        image: "jenkins/jnlp-slave"
-        label: "ecs"
-        launchType: "FARGATE"
-        memory: 0
-        memoryReservation: 512
-        networkMode: "awsvpc"
-        privileged: false
-        remoteFSRoot: "/home/jenkins"
-        securityGroups: "${FARGATE_SECURITY_GROUP}"
-        sharedMemorySize: 0
-        subnets: "${FARGATE_SUBNET}"
-        templateName: "ecs"
+#  - ecs:
+#      allowedOverrides: "all"
+#      cluster: "${JENKINS_CLUSTER}"
+#      credentialsId: "aws"
+#      jenkinsUrl: "${JENKINS_URL}"
+#      name: "ecs"
+#      regionName: "eu-west-2"
+#      templates:
+#      - assignPublicIp: true
+#        cpu: 256
+#        image: "jenkins/jnlp-slave"
+#        label: "ecs"
+#        launchType: "FARGATE"
+#        memory: 0
+#        memoryReservation: 512
+#        networkMode: "awsvpc"
+#        privileged: false
+#        remoteFSRoot: "/home/jenkins"
+#        securityGroups: "${FARGATE_SECURITY_GROUP}"
+#        sharedMemorySize: 0
+#        subnets: "${FARGATE_SUBNET}"
+#        templateName: "ecs"
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: false

@@ -32,7 +32,6 @@ provider "aws" {
 }
 
 
-
 module "ssm" {
   source = "./modules/ssm"
   environment = local.environment
@@ -44,10 +43,21 @@ module "caller" {
   source = "./modules/caller"
 }
 
+module "ecs_network" {
+  source = "./modules/network"
+  common_tags = local.common_tags
+  environment = local.environment
+  app_name = "jenkins"
+}
+
 module "jenkins" {
   source = "./modules/jenkins"
   common_tags = local.common_tags
   environment = local.environment
   role = "arn:aws:iam::${module.caller.account_id}:role/ecsTaskExecutionRole"
   service_name = "jenkins-${local.environment}"
+  ecs_private_subnet = module.ecs_network.ecs_private_subnet
+  ecs_public_subnet = module.ecs_network.ecs_public_subnet
+  ecs_vpc = module.ecs_network.ecs_vpc
+  network_interface_id = module.ecs_network.ec2_network_interface
 }

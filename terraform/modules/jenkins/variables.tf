@@ -53,3 +53,35 @@ variable "container_name" {
 variable "service_name" {
   description = "The name of the service"
 }
+
+variable "ecs_private_subnet" {
+  description = "The private subnet for the application"
+}
+
+variable "ecs_vpc" {
+  description = "The VPC for the application"
+}
+
+variable "health_check_path" {
+  default = "/"
+}
+
+variable "app_name" {
+  description = "Name of the hosted application"
+  type        = string
+  default     = "tdr-jenkins"
+}
+
+
+variable "ecs_public_subnet" {
+  description = "The public subnet for the application"
+}
+
+variable "app_port" {
+  description = "Port exposed by the docker image to redirect traffic to"
+  default     = "8080"
+}
+
+variable "network_interface_id" {
+  description = "The network interface for the EC2 instance"
+}
