@@ -40,7 +40,6 @@ junit:1.28
 workflow-support:3.3
 git-server:1.8
 docker-commons:1.15
-trilead-api:1.0.5
 token-macro:2.8
 pipeline-rest-api:2.12
 durable-task:1.30
@@ -65,7 +64,6 @@ workflow-durable-task-step:2.33
 docker-workflow:1.19
 pipeline-graph-analysis:1.10
 workflow-scm-step:2.9
-scalable-amazon-ecs:1.0
 ssh-credentials:1.17.1
 workflow-api:2.36
 configuration-as-code:1.27

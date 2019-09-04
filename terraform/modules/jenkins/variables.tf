@@ -63,7 +63,7 @@ variable "ecs_vpc" {
 }
 
 variable "health_check_path" {
-  default = "/"
+  default = "/login"
 }
 
 variable "app_name" {
