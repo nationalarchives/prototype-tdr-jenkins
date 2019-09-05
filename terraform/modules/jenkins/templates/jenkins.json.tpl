@@ -45,7 +45,7 @@
           },
           {
             "name": "FARGATE_SUBNET",
-            "value": "subnet-8bc567f1"
+            "value": "${fargate_subnet}"
           }
         ],
         "mountPoints": [

@@ -37,6 +37,7 @@ module "ssm" {
   environment = local.environment
   secrets = local.secrets
   fargate_security_group = module.jenkins.fargate_security_group
+  load_balancer_url = module.jenkins.load_balancer_url
 }
 
 module "caller" {
@@ -59,5 +60,5 @@ module "jenkins" {
   ecs_private_subnet = module.ecs_network.ecs_private_subnet
   ecs_public_subnet = module.ecs_network.ecs_public_subnet
   ecs_vpc = module.ecs_network.ecs_vpc
-  network_interface_id = module.ecs_network.ec2_network_interface
+  ecs_vpc_cidr = module.ecs_network.ecs_vpc_cidr
 }

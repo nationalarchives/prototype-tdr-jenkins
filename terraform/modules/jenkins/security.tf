@@ -1,13 +1,27 @@
-resource "aws_security_group" "lb" {
-  name        = "${var.app_name}-load-balancer-security-group"
-  description = "Controls access to the TDR application load balancer"
+resource "aws_security_group" "ec2" {
+  name        = "${var.app_name}-ec2-security-group"
+  description = "Controls access to the TDR application EC2 instance"
   vpc_id      = var.ecs_vpc
 
   ingress {
     protocol    = "tcp"
     from_port   = 80
     to_port     = 80
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["85.115.53.202/32"]
+  }
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 80
+    to_port     = 80
+    cidr_blocks = [var.ecs_vpc_cidr]
+  }
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 50000
+    to_port     = 50000
+    cidr_blocks = [var.ecs_vpc_cidr]
   }
 
   egress {
@@ -64,3 +78,4 @@ resource "aws_security_group" "ecs_tasks" {
   )
   )
 }
+

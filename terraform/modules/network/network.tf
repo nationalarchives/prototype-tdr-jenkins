@@ -95,7 +95,5 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private.*.id[count.index]
 }
 
-resource "aws_network_interface" "ec2_network_interface" {
-  count          = var.az_count
-  subnet_id       = aws_subnet.public.*.id[count.index]
-}
+
+

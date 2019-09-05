@@ -24,7 +24,7 @@ resource "aws_ssm_parameter" "jenkins_url" {
   name        = "/${var.environment}/jenkins_url"
   description = "The url for the jenkins server"
   type        = "String"
-  value       = "http://3.9.165.101"
+  value       = var.load_balancer_url
 
   tags = {
     environment = var.environment

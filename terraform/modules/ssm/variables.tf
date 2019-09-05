@@ -5,3 +5,5 @@ variable "secrets" {
 variable "environment" {}
 
 variable "fargate_security_group" {}
+
+variable "load_balancer_url" {}

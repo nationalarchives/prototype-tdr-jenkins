@@ -1,8 +1,7 @@
 resource "aws_alb" "main" {
   name            = "tdr-jenkins-load-balancer-${var.environment}"
   subnets         = var.ecs_public_subnet
-  security_groups = [aws_security_group.lb.id]
-
+  load_balancer_type = "network"
   tags = merge(
   var.common_tags,
   map("Name", "${var.app_name}-loadbalancer")
@@ -18,17 +17,11 @@ resource "random_string" "alb_prefix" {
 resource "aws_alb_target_group" "jenkins" {
   name        = "jenkins-target-group-${random_string.alb_prefix.result}-${var.environment}"
   port        = 80
-  protocol    = "HTTP"
+  protocol    = "TCP"
   vpc_id      = var.ecs_vpc
-
-  health_check {
-    healthy_threshold   = "3"
-    interval            = "30"
-    protocol            = "HTTP"
-    matcher             = "200"
-    timeout             = "3"
-    path                = var.health_check_path
-    unhealthy_threshold = "2"
+  stickiness {
+    enabled = false
+    type = "lb_cookie"
   }
 
   tags = merge(
@@ -37,20 +30,14 @@ resource "aws_alb_target_group" "jenkins" {
   )
 }
 
-resource "aws_alb_target_group" "jenkins-slave" {
+resource "aws_alb_target_group" "jenkins_api" {
   name        = "jenkins-slave-group-${random_string.alb_prefix.result}-${var.environment}"
   port        = 50000
-  protocol    = "HTTP"
+  protocol    = "TCP"
   vpc_id      = var.ecs_vpc
-
-  health_check {
-    healthy_threshold   = "3"
-    interval            = "30"
-    protocol            = "HTTP"
-    matcher             = "200"
-    timeout             = "3"
-    path                = var.health_check_path
-    unhealthy_threshold = "2"
+  stickiness {
+    enabled = false
+    type = "lb_cookie"
   }
 
   tags = merge(
@@ -63,7 +50,7 @@ resource "aws_alb_target_group" "jenkins-slave" {
 resource "aws_alb_listener" "jenkins" {
   load_balancer_arn = aws_alb.main.id
   port              = "80"
-  protocol          = "HTTP"
+  protocol          = "TCP"
 
   default_action {
     target_group_arn = aws_alb_target_group.jenkins.id
@@ -71,13 +58,13 @@ resource "aws_alb_listener" "jenkins" {
   }
 }
 
-resource "aws_alb_listener" "jenkins" {
+resource "aws_alb_listener" "jenkins_50000" {
   load_balancer_arn = aws_alb.main.id
   port              = "50000"
-  protocol          = "HTTP"
+  protocol          = "TCP"
 
   default_action {
-    target_group_arn = aws_alb_target_group.jenkins-slave.id
+    target_group_arn = aws_alb_target_group.jenkins_api.id
     type             = "forward"
   }
 }

@@ -55,11 +55,11 @@ variable "service_name" {
 }
 
 variable "ecs_private_subnet" {
-  description = "The private subnet for the application"
+  description = "The private subnet for jenkins"
 }
 
 variable "ecs_vpc" {
-  description = "The VPC for the application"
+  description = "The VPC for jenkins"
 }
 
 variable "health_check_path" {
@@ -82,6 +82,9 @@ variable "app_port" {
   default     = "8080"
 }
 
-variable "network_interface_id" {
-  description = "The network interface for the EC2 instance"
+variable "az_count" {
+  description = "Number of AZs to cover in a given region"
+  default     = "2"
 }
+
+variable "ecs_vpc_cidr" {}

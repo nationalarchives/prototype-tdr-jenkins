@@ -8,8 +8,9 @@ resource "aws_instance" "jenkins" {
   ami = data.aws_ami.ecs_ami.id
   instance_type = "t2.small"
   iam_instance_profile = aws_iam_instance_profile.jenkins_profile.name
+
   network_interface {
-    network_interface_id = var.network_interface_id
+    network_interface_id = aws_network_interface.ec2_network_interface[0].id
     device_index = 0
   }
   key_name = "jenkins_key_pair"
@@ -85,4 +86,10 @@ data "aws_iam_policy_document" "lambda_policy" {
       "*",
     ]
   }
+}
+
+resource "aws_network_interface" "ec2_network_interface" {
+  count          = var.az_count
+  subnet_id       = var.ecs_private_subnet[0]
+  security_groups = [aws_security_group.ec2.id]
 }
