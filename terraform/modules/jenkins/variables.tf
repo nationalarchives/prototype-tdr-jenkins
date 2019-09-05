@@ -32,7 +32,7 @@ variable "cpu" {
 
 variable "memory" {
   description = "Memory to provision (in MiB)"
-  default     = "512"
+  default     = "1024"
 }
 
 variable "task_image" {
