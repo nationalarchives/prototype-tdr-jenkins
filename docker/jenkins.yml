@@ -27,7 +27,7 @@ jenkins:
       authenticatedUserCreateJobPermission: false
       authenticatedUserReadPermission: true
       organizationNames: "nationalarchives"
-      useRepositoryPermissions: false
+      useRepositoryPermissions: true
   clouds:
   - ecs:
       allowedOverrides: "all"
