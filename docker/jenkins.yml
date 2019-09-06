@@ -18,8 +18,16 @@ jenkins:
   - "JNLP4-connect"
   - "Ping"
   authorizationStrategy:
-    loggedInUsersCanDoAnything:
-      allowAnonymousRead: false
+    github:
+      adminUserNames: "MancunianSam"
+      allowAnonymousJobStatusPermission: false
+      allowAnonymousReadPermission: false
+      allowCcTrayPermission: true
+      allowGithubWebHookPermission: true
+      authenticatedUserCreateJobPermission: false
+      authenticatedUserReadPermission: true
+      organizationNames: "nationalarchives"
+      useRepositoryPermissions: false
   clouds:
   - ecs:
       allowedOverrides: "all"
