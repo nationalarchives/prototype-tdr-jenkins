@@ -8,7 +8,9 @@ This project can be used to spin up a jenkins server using ECS. The ECS cluster 
 This creates the jenkins docker image which we run as part of the ECS service. It extends the base docker image but adds the plugins.txt and jenkins.yml and runs the command to install the plugins. This is pushed to docker hub.
 
 ### terraform
-This is incomplete in that it doesn't create the vpc for the ecs service and it doesn't create the ec2 instance for the ecs tasks to run against. It does create
+This creates
+* The EC2 instance for the master to run on
+* The VPC and subnets
 * The ECS cluster
 * The ECS service
 * The ECS task definition
@@ -70,4 +72,5 @@ docker push nationalarchives/jenkins
 cd ../terraform
 terraform apply
 ```
+
 
