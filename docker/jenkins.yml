@@ -31,7 +31,7 @@ jenkins:
       templates:
       - assignPublicIp: true
         cpu: 256
-        image: "jenkins/jnlp-slave"
+        image: "nationalarchives/jenkins-sbt-slave"
         label: "ecs"
         launchType: "FARGATE"
         memory: 0
