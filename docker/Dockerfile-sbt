@@ -9,4 +9,6 @@ RUN apt-get update && \
         apt-get install sbt && \
         curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
         python get-pip.py && \
-        pip install awscli --upgrade --user
+        pip install awscli 
+
+
