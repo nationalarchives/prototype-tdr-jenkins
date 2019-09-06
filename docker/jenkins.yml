@@ -30,12 +30,12 @@ jenkins:
       regionName: "eu-west-2"
       templates:
       - assignPublicIp: true
-        cpu: 256
+        cpu: 2048
         image: "nationalarchives/jenkins-sbt-slave"
         label: "ecs"
         launchType: "FARGATE"
         memory: 0
-        memoryReservation: 512
+        memoryReservation: 4096
         networkMode: "awsvpc"
         privileged: false
         remoteFSRoot: "/home/jenkins"
