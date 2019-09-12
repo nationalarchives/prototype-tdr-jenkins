@@ -42,11 +42,22 @@ resource "aws_ssm_parameter" "fargate_security_group" {
   }
 }
 
-resource "aws_ssm_parameter" "admin_password" {
-  name        = "/${var.environment}/admin_password"
-  description = "The admin password for jenkins"
+resource "aws_ssm_parameter" "github_client" {
+  name        = "/${var.environment}/github/client"
+  description = "The client id for the github auth integration"
   type        = "String"
-  value       = var.secrets.admin_password
+  value       = var.secrets.github_client
+
+  tags = {
+    environment = var.environment
+  }
+}
+
+resource "aws_ssm_parameter" "github_secret" {
+  name        = "/${var.environment}/github/secret"
+  description = "The client secret for the github auth integration"
+  type        = "String"
+  value       = var.secrets.github_secret
 
   tags = {
     environment = var.environment

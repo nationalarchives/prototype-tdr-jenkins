@@ -34,8 +34,12 @@
             "valueFrom" : "/${app_environment}/fargate_security_group"
           },
           {
-            "name": "ADMIN_PASSWORD",
-            "valueFrom" : "/${app_environment}/admin_password"
+            "name": "GITHUB_CLIENT",
+            "valueFrom" : "/${app_environment}/github/client"
+          },
+          {
+            "name": "GITHUB_SECRET",
+            "valueFrom" : "/${app_environment}/github/secret"
           }
         ],
         "environment": [

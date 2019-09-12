@@ -69,3 +69,4 @@ workflow-api:2.36
 configuration-as-code:1.27
 workflow-cps:2.73
 structs:1.20
+github-oauth:0.33

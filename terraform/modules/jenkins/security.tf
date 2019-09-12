@@ -19,6 +19,13 @@ resource "aws_security_group" "ec2" {
 
   ingress {
     protocol    = "tcp"
+    from_port   = 443
+    to_port     = 443
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    protocol    = "tcp"
     from_port   = 50000
     to_port     = 50000
     cidr_blocks = ["0.0.0.0/0"]

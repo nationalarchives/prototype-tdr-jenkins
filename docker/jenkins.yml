@@ -9,11 +9,13 @@ credentials:
           secretKey: "${SECRET_KEY}"
 jenkins:
   securityRealm:
-    local:
-      allowsSignup: false
-      users:
-        - id: admin
-          password: ${ADMIN_PASSWORD}
+    github:
+      clientID: "${GITHUB_CLIENT}"
+      clientSecret: "${GITHUB_SECRET}"
+      githubApiUri: "https://api.github.com"
+      githubWebUri: "https://github.com"
+      oauthScopes: "read:org,user:email,repo"
+
   agentProtocols:
   - "JNLP4-connect"
   - "Ping"
@@ -33,7 +35,6 @@ jenkins:
       allowedOverrides: "all"
       cluster: "${JENKINS_CLUSTER}"
       credentialsId: "aws"
-      jenkinsUrl: "${JENKINS_URL}"
       name: "ecs"
       regionName: "eu-west-2"
       templates:
@@ -81,12 +82,12 @@ unclassified:
   buildStepOperation:
     enabled: false
   gitHubPluginConfig:
-    hookUrl: "${JENKINS_URL}"
+    hookUrl: "https://jenkins.tdr-prototype.co.uk"
   gitSCM:
     createAccountBasedOnEmail: false
   location:
     adminAddress: "address not configured yet <nobody@nowhere>"
-    url: "${JENKINS_URL}"
+    url: "https://jenkins.tdr-prototype.co.uk"
   mailer:
     adminAddress: "address not configured yet <nobody@nowhere>"
     charset: "UTF-8"
