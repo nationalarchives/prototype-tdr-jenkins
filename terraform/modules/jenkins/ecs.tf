@@ -79,5 +79,5 @@ resource "aws_ecs_service" "jenkins" {
     container_port = 50000
   }
 
-  depends_on = [aws_alb_listener.jenkins_tls, aws_alb_listener.jenkins_50000]
+  depends_on = [aws_alb_listener.jenkins, aws_alb_listener.jenkins_50000]
 }
