@@ -1,5 +1,5 @@
 data "aws_s3_bucket_object" "secrets" {
-  bucket = "tna-secrets"
+  bucket = "tna-secrets-ir"
   key    = "${local.environment}/secrets.yml"
 }
 
@@ -19,9 +19,9 @@ locals {
 
 terraform {
   backend "s3" {
-    bucket = "tna-jenkins-terraform-state"
+    bucket = "tna-jenkins-terraform-state-ir"
     key = "prototype-terraform-state"
-    region = "eu-west-2"
+    region = "eu-west-1"
     encrypt = true
     dynamodb_table = "tna-jenkins-terraform-statelock"
   }
@@ -61,4 +61,6 @@ module "jenkins" {
   ecs_public_subnet = module.ecs_network.ecs_public_subnet
   ecs_vpc = module.ecs_network.ecs_vpc
   ecs_vpc_cidr = module.ecs_network.ecs_vpc_cidr
+  elastic_ip_address = module.ecs_network.elastic_ip_address
+  ecs_vpc_cidr_block = module.ecs_network.ecs_vpc_cidr_block
 }

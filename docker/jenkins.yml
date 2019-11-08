@@ -34,6 +34,7 @@ jenkins:
   - ecs:
       allowedOverrides: "all"
       cluster: "${JENKINS_CLUSTER}"
+      jenkinsUrl: "${LOAD_BALANCER_URL}"
       credentialsId: "aws"
       name: "ecs"
       regionName: "eu-west-2"

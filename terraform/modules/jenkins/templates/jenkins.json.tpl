@@ -50,6 +50,10 @@
           {
             "name": "FARGATE_SUBNET",
             "value": "${fargate_subnet}"
+          },
+          {
+            "name": "LOAD_BALANCER_URL",
+            "value": "${load_balancer_url}"
           }
         ],
         "mountPoints": [
