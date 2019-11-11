@@ -7,6 +7,8 @@ This project can be used to spin up a jenkins server using ECS. The ECS cluster 
 ### docker
 This creates the jenkins docker image which we run as part of the ECS service. It extends the base docker image but adds the plugins.txt and jenkins.yml and runs the command to install the plugins. This is pushed to docker hub.
 
+There is also an image for one of the Jenkins slaves. The idea is that there will be an image to build each project and they can be selected in each projects Jenkinsfile.
+
 ### terraform
 This creates
 * The EC2 instance for the master to run on
@@ -16,6 +18,24 @@ This creates
 * The ECS task definition
 * The security group
 * The AWS SSM parameters
+
+### lambda
+There are security group rules which only allow access to the load balancer from cloudfront IP ranges. This prevents anyone accessing the load balancer directly as this is only served over http and Jenkins should run over https. The problem is that these IP ranges can change. Amazon publishes a notification to an SNS topic when they do change. This will run the lambda in this folder which will update the Jenkins security groups. There is an article [here](https://aws.amazon.com/blogs/security/how-to-automatically-update-your-security-groups-for-amazon-cloudfront-and-aws-waf-by-using-aws-lambda/) describing this.
+
+To build the lambda.
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+deactivate
+cd venv/lib/python3.6/site-packages/
+zip -r9 ../../../../function.zip .
+cd -
+zip -g function.zip update_security_groups.py
+```
+This can then be deployed with terraform or using another method such as the aws cli.
+
 
 ## Sample job
 I created the following sample pipeline job.

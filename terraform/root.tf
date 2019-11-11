@@ -63,4 +63,5 @@ module "jenkins" {
   ecs_vpc_cidr = module.ecs_network.ecs_vpc_cidr
   elastic_ip_address = module.ecs_network.elastic_ip_address
   ecs_vpc_cidr_block = module.ecs_network.ecs_vpc_cidr_block
+  account_id = module.caller.account_id
 }

@@ -92,3 +92,5 @@ variable "ecs_vpc_cidr" {}
 variable "elastic_ip_address" {}
 
 variable "ecs_vpc_cidr_block" {}
+
+variable "account_id" {}
