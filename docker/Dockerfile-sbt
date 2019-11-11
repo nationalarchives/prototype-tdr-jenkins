@@ -1,6 +1,6 @@
 FROM jenkins/jnlp-slave
 USER root
-ENV AWS_DEFAULT_REGION eu-west-2
+ENV AWS_DEFAULT_REGION eu-west-1
 RUN apt-get update && \
         apt-get install -y apt-transport-https && \
         echo "deb https://dl.bintray.com/sbt/debian /" >> /etc/apt/sources.list.d/sbt.list && \
