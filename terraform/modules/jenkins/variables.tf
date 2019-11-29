@@ -18,11 +18,7 @@ variable "tag_service" {
 
 variable "aws_region" {
   description = "The AWS region"
-  default     = "eu-west-1"
-}
-
-variable "role" {
-  description = "Role arn for the ecsTaskExecutionRole"
+  default     = "eu-west-2"
 }
 
 variable "cpu" {
@@ -94,3 +90,5 @@ variable "elastic_ip_address" {}
 variable "ecs_vpc_cidr_block" {}
 
 variable "account_id" {}
+
+variable "role" {}

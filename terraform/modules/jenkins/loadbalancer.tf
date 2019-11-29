@@ -14,6 +14,16 @@ resource "random_string" "alb_prefix" {
   special = false
 }
 
+resource "aws_alb_target_group_attachment" "jenkins_target_attachment" {
+  target_group_arn = aws_alb_target_group.jenkins.arn
+  target_id = aws_instance.jenkins.id
+}
+
+resource "aws_alb_target_group_attachment" "jenkins_api_target_attachment" {
+  target_group_arn = aws_alb_target_group.jenkins_api.arn
+  target_id = aws_instance.jenkins.id
+}
+
 resource "aws_alb_target_group" "jenkins" {
   name        = "jenkins-target-group-${random_string.alb_prefix.result}-${var.environment}"
   port        = 80

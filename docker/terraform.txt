@@ -1,0 +1,12 @@
+2019/11/29 12:15:09 [INFO] Terraform version: 0.12.13  
+2019/11/29 12:15:09 [INFO] Go runtime version: go1.12.9
+2019/11/29 12:15:09 [INFO] CLI args: []string{"/usr/local/bin/terraform", "apply", "-input=false", "-auto-approve"}
+2019/11/29 12:15:09 [DEBUG] Attempting to open CLI config file: /home/sam/.terraformrc
+2019/11/29 12:15:09 [DEBUG] File doesn't exist, but doesn't need to. Ignoring.
+2019/11/29 12:15:09 [INFO] CLI command args: []string{"apply", "-input=false", "-auto-approve"}
+2019/11/29 12:15:09 [DEBUG] checking for provider in "."
+2019/11/29 12:15:09 [DEBUG] checking for provider in "/usr/local/bin"
+2019/11/29 12:15:09 [DEBUG] checking for provisioner in "."
+2019/11/29 12:15:09 [DEBUG] checking for provisioner in "/usr/local/bin"
+2019/11/29 12:15:09 [INFO] Failed to read plugin lock file .terraform/plugins/linux_amd64/lock.json: open .terraform/plugins/linux_amd64/lock.json: no such file or directory
+2019/11/29 12:15:09 [INFO] backend/local: starting Apply operation

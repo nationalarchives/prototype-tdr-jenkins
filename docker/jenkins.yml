@@ -37,7 +37,7 @@ jenkins:
       jenkinsUrl: "${LOAD_BALANCER_URL}"
       credentialsId: "aws"
       name: "ecs"
-      regionName: "eu-west-1"
+      regionName: "eu-west-2"
       templates:
       - assignPublicIp: true
         cpu: 2048

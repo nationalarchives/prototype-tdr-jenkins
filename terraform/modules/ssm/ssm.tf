@@ -3,7 +3,7 @@ resource "aws_ssm_parameter" "access_key" {
   description = "The access key"
   type        = "String"
   value       = var.secrets.access_key
-
+  overwrite = true
   tags = {
     environment = var.environment
   }
@@ -14,7 +14,7 @@ resource "aws_ssm_parameter" "secret_key" {
   description = "The access key"
   type        = "String"
   value       = var.secrets.secret_key
-
+  overwrite = true
   tags = {
     environment = var.environment
   }
@@ -25,7 +25,7 @@ resource "aws_ssm_parameter" "jenkins_url" {
   description = "The url for the jenkins server"
   type        = "String"
   value       = var.load_balancer_url
-
+  overwrite = true
   tags = {
     environment = var.environment
   }
@@ -36,7 +36,7 @@ resource "aws_ssm_parameter" "fargate_security_group" {
   description = "The security group for the fargate jenkins slaves"
   type        = "String"
   value       = var.fargate_security_group
-
+  overwrite = true
   tags = {
     environment = var.environment
   }
@@ -47,7 +47,7 @@ resource "aws_ssm_parameter" "github_client" {
   description = "The client id for the github auth integration"
   type        = "String"
   value       = var.secrets.github_client
-
+  overwrite = true
   tags = {
     environment = var.environment
   }
@@ -58,7 +58,7 @@ resource "aws_ssm_parameter" "github_secret" {
   description = "The client secret for the github auth integration"
   type        = "String"
   value       = var.secrets.github_secret
-
+  overwrite = true
   tags = {
     environment = var.environment
   }

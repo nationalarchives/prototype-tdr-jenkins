@@ -51,6 +51,11 @@ data "aws_iam_policy_document" "jenkins_ec2_assume_role" {
   }
 }
 
+resource "aws_key_pair" "jenkins_key_pair" {
+  key_name   = "jenkins_key_pair"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCOPd65SbGitmEt2SW69HXscqe+m6bN8AqOr4TdA/5O+eLpUDySXxytlcgN1PcX3y5/SXuXqPLmRdlUg6OKD/Uqx1lK2iFsBVWHArhVQWkIEX1VGfo+rlXVWSOcTRZcwp6nuCilWEyAfb3U27mUWqluihw6jTu9/8JmKn03wkmakhLoihizXutftK4AZGoDVdp4lxBAjBA6F0f5yxooK6GfFqRazTjvUr9ICu4sy2B+t9h6GtBERjUc8iw2ddQP597Uv9cAqJkHOiNeqgRJkSZMePlJzasDTCIlyRC/VXaxk+Lv1CKt1jnruf353VZPzamlTabrXSaocuWdi2NMR7NF jenkins_key_pair"
+}
+
 resource "aws_iam_policy" "jenkins_ec2_policy" {
   name   = "jenkins_ec2_policy_${var.environment}"
   path   = "/"
