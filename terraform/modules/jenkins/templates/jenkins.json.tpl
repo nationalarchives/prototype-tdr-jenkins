@@ -40,6 +40,26 @@
           {
             "name": "GITHUB_SECRET",
             "valueFrom" : "/${app_environment}/github/secret"
+          },
+          {
+            "name": "GITHUB_USERNAME",
+            "valueFrom" : "/${app_environment}/github/username"
+          },
+          {
+            "name": "GITHUB_PASSWORD",
+            "valueFrom" : "/${app_environment}/github/password"
+          },
+          {
+            "name": "DOCKER_USERNAME",
+            "valueFrom" : "/${app_environment}/docker/username"
+          },
+          {
+            "name": "DOCKER_PASSWORD",
+            "valueFrom" : "/${app_environment}/docker/password"
+          },
+          {
+            "name": "SLACK_TOKEN",
+            "valueFrom" : "/${app_environment}/slack/token"
           }
         ],
         "environment": [

@@ -17,7 +17,12 @@ resource "aws_security_group" "ec2_internal" {
     protocol    = "tcp"
     from_port   = 80
     to_port     = 80
-    cidr_blocks = ["${var.elastic_ip_address}/32"]
+    #"${aws_security_group.example.*.id}"
+    cidr_blocks = [
+    for num in var.elastic_ip_address[*].public_ip:
+      cidrsubnet("${num}/32", 0, 0)
+    ]
+//    cidr_blocks = "${var.elastic_ip_address.public_ip}/32"
   }
 
   ingress {
@@ -27,11 +32,15 @@ resource "aws_security_group" "ec2_internal" {
     cidr_blocks = [var.ecs_vpc_cidr_block]
   }
 
+  # 50000 is the port which allows the nodes to connect to the parent
   ingress {
     protocol    = "tcp"
     from_port   = 50000
     to_port     = 50000
-    cidr_blocks = ["${var.elastic_ip_address}/32"]
+    cidr_blocks = [
+    for num in var.elastic_ip_address[*].public_ip:
+    cidrsubnet("${num}/32", 0, 0)
+    ]
   }
 
   ingress {

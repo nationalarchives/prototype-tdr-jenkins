@@ -5,7 +5,7 @@ data "aws_s3_bucket_object" "secrets" {
 
 locals {
   #Ensure that developers' workspaces always default to 'dev'
-  environment = lookup(var.workspace_to_environment_map, terraform.workspace, "dev")
+  environment = lookup(var.workspace_to_environment_map, terraform.workspace, "mgmt")
   tag_prefix = var.tag_prefix
   aws_region = var.default_aws_region
   common_tags = map(
@@ -55,7 +55,7 @@ module "jenkins" {
   source = "./modules/jenkins"
   common_tags = local.common_tags
   environment = local.environment
-  service_name = "jenkins-${local.environment}"
+  service_name = "jenkins"
   role = "arn:aws:iam::328920706552:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
   ecs_private_subnet = module.ecs_network.ecs_private_subnet
   ecs_public_subnet = module.ecs_network.ecs_public_subnet

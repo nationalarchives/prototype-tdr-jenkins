@@ -19,5 +19,5 @@ output "ecs_private_subnet" {
 }
 
 output "elastic_ip_address" {
-  value = aws_eip.gw[0].public_ip
+  value = aws_eip.gw[*]
 }

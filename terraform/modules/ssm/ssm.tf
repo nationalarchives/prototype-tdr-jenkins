@@ -63,3 +63,59 @@ resource "aws_ssm_parameter" "github_secret" {
     environment = var.environment
   }
 }
+
+resource "aws_ssm_parameter" "github_username" {
+  name        = "/${var.environment}/github/username"
+  description = "The username for the jenkins github webhook"
+  type        = "String"
+  value       = var.secrets.github_username
+  overwrite = true
+  tags = {
+    environment = var.environment
+  }
+}
+
+resource "aws_ssm_parameter" "github_password" {
+  name        = "/${var.environment}/github/password"
+  description = "The password for the jenkins github webhook"
+  type        = "String"
+  value       = var.secrets.github_password
+  overwrite = true
+  tags = {
+    environment = var.environment
+  }
+}
+
+
+resource "aws_ssm_parameter" "docker_username" {
+  name        = "/${var.environment}/docker/username"
+  description = "The username for the jenkins docker user"
+  type        = "String"
+  value       = var.secrets.docker_username
+  overwrite = true
+  tags = {
+    environment = var.environment
+  }
+}
+
+resource "aws_ssm_parameter" "docker_password" {
+  name        = "/${var.environment}/docker/password"
+  description = "The password for the jenkins docker user"
+  type        = "String"
+  value       = var.secrets.docker_password
+  overwrite = true
+  tags = {
+    environment = var.environment
+  }
+}
+
+resource "aws_ssm_parameter" "slack_token" {
+  name        = "/${var.environment}/slack/token"
+  description = "The token for the slack integration"
+  type        = "String"
+  value       = var.secrets.slack_token
+  overwrite = true
+  tags = {
+    environment = var.environment
+  }
+}
