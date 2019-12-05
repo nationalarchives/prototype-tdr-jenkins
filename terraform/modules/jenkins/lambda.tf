@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 resource "aws_lambda_function" "sg_update_lambda" {
   function_name = "tdr-jenkins-sg-update-${var.environment}"
   runtime = "python3.7"
@@ -66,7 +68,7 @@ data "aws_iam_policy_document" "sg_update_policy" {
     ]
 
     resources = [
-      "arn:aws:logs:${var.aws_region}:${var.account_id}:*"
+      "arn:aws:logs:eu-west-2:${data.aws_caller_identity.current.account_id}:*"
     ]
   }
 

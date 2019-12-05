@@ -3,7 +3,7 @@ resource "aws_ecs_cluster" "jenkins_cluster" {
 
   tags = merge(
   var.common_tags,
-  map("Name", var.tag_name)
+  map("Name", "tdr-ecs-jenkins")
   )
 }
 
@@ -11,11 +11,11 @@ data "template_file" "jenkins_template" {
   template = file("./modules/jenkins/templates/jenkins.json.tpl")
 
   vars = {
-    jenkins_image = "${var.task_image}:${var.environment}"
+    jenkins_image = "docker.io/nationalarchives/jenkins:${var.environment}"
     container_name = "${var.container_name}-${var.environment}"
     app_environment = var.environment
     cluster_arn = aws_ecs_cluster.jenkins_cluster.arn
-    fargate_subnet = var.ecs_private_subnet[0]
+    fargate_subnet = aws_subnet.private[0].id
     load_balancer_url = "http://${aws_alb.main.dns_name}"
   }
 }
@@ -25,8 +25,8 @@ resource "aws_ecs_task_definition" "jenkins_task" {
   execution_role_arn       = aws_iam_role.api_ecs_execution.arn
   network_mode             = "bridge"
   requires_compatibilities = ["EC2"]
-  cpu                      = var.cpu
-  memory                   = var.memory
+  cpu                      = "256"
+  memory                   = "1024"
   container_definitions    = data.template_file.jenkins_template.rendered
   task_role_arn            = aws_iam_role.api_ecs_task.arn
 
@@ -60,7 +60,7 @@ resource "aws_ecs_task_definition" "jenkins_task" {
 }
 
 resource "aws_ecs_service" "jenkins" {
-  name                              = "${var.service_name}-service-${var.environment}"
+  name                              = "${var.container_name}-service-${var.environment}"
   cluster                           = aws_ecs_cluster.jenkins_cluster.id
   task_definition                   = aws_ecs_task_definition.jenkins_task.arn
   desired_count                     = 1
@@ -70,7 +70,7 @@ resource "aws_ecs_service" "jenkins" {
   load_balancer {
     target_group_arn = aws_alb_target_group.jenkins.id
     container_name   = "${var.container_name}-${var.environment}"
-    container_port   = var.app_port
+    container_port   = 8080
   }
 
   load_balancer {

@@ -5,7 +5,7 @@ data "aws_s3_bucket_object" "secrets" {
 
 locals {
   #Ensure that developers' workspaces always default to 'dev'
-  environment = lookup(var.workspace_to_environment_map, terraform.workspace, "mgmt")
+  environment = "mgmt"
   tag_prefix = var.tag_prefix
   aws_region = var.default_aws_region
   common_tags = map(
@@ -32,36 +32,12 @@ provider "aws" {
 }
 
 
-module "ssm" {
-  source = "./modules/ssm"
-  environment = local.environment
-  secrets = local.secrets
-  fargate_security_group = module.jenkins.fargate_security_group
-  load_balancer_url = module.jenkins.load_balancer_url
-}
-
-module "caller" {
-  source = "./modules/caller"
-}
-
-module "ecs_network" {
-  source = "./modules/network"
-  common_tags = local.common_tags
-  environment = local.environment
-  app_name = "jenkins"
-}
-
 module "jenkins" {
   source = "./modules/jenkins"
   common_tags = local.common_tags
   environment = local.environment
-  service_name = "jenkins"
-  role = "arn:aws:iam::328920706552:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
-  ecs_private_subnet = module.ecs_network.ecs_private_subnet
-  ecs_public_subnet = module.ecs_network.ecs_public_subnet
-  ecs_vpc = module.ecs_network.ecs_vpc
-  ecs_vpc_cidr = module.ecs_network.ecs_vpc_cidr
-  elastic_ip_address = module.ecs_network.elastic_ip_address
-  ecs_vpc_cidr_block = module.ecs_network.ecs_vpc_cidr_block
-  account_id = module.caller.account_id
+  app_name = "tdr-jenkins"
+  container_name = "jenkins"
+  az_count = 2
+  secrets = local.secrets
 }

@@ -94,7 +94,7 @@ data "aws_iam_policy_document" "lambda_policy" {
 }
 
 resource "aws_network_interface" "ec2_network_interface" {
-  count          = var.az_count
-  subnet_id       = var.ecs_private_subnet[0]
+  count           = 2
+  subnet_id       = aws_subnet.private[0].id
   security_groups = [aws_security_group.ec2_internal.id, aws_security_group.ec2_cloudfront_global.id, aws_security_group.ec2_cloudfront_regional.id]
 }

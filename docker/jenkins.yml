@@ -114,7 +114,7 @@ unclassified:
     room: "tdr"
     sendAsText: false
     teamDomain: "tna-digital"
-    tokenCredentialId: "slack"
+    tokenCredentialId: "slack"100
   timestamperConfig:
     allPipelines: true
     elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
