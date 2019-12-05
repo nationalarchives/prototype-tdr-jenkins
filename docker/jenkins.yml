@@ -7,6 +7,20 @@ credentials:
           id: "aws"
           scope: GLOBAL
           secretKey: "${SECRET_KEY}"
+      - usernamePassword:
+          username: ${DOCKER_USERNAME}
+          password: ${DOCKER_PASSWORD}
+          id: "docker"
+          scope: GLOBAL
+      - usernamePassword:
+          username: ${GITHUB_USERNAME}
+          password: ${GITHUB_PASSWORD}
+          id: "github"
+          scope: GLOBAL
+      - string:
+          id: "slack"
+          scope: GLOBAL
+          secret: ${SLACK_TOKEN}
 jenkins:
   securityRealm:
     github:
@@ -21,7 +35,7 @@ jenkins:
   - "Ping"
   authorizationStrategy:
     github:
-      adminUserNames: "MancunianSam"
+      adminUserNames: "MancunianSam,Dclipsham,ian-hoyle,LauraDamianTNA,MarkKingsbury,plembke-tna,sarrahdi,suzannehamilton,TomJKing"
       allowAnonymousJobStatusPermission: false
       allowAnonymousReadPermission: false
       allowCcTrayPermission: true
@@ -34,6 +48,7 @@ jenkins:
   - ecs:
       allowedOverrides: "all"
       cluster: "${JENKINS_CLUSTER}"
+      jenkinsUrl: "${LOAD_BALANCER_URL}"
       credentialsId: "aws"
       name: "ecs"
       regionName: "eu-west-2"
@@ -94,6 +109,12 @@ unclassified:
     useSsl: false
   pollSCM:
     pollingThreadCount: 10
+  slackNotifier:
+    botUser: false
+    room: "tdr"
+    sendAsText: false
+    teamDomain: "tna-digital"
+    tokenCredentialId: "slack"100
   timestamperConfig:
     allPipelines: true
     elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"

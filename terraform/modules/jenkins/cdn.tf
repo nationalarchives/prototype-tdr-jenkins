@@ -18,7 +18,6 @@ resource "aws_cloudfront_distribution" "web_distribution" {
 
   enabled             = true
   is_ipv6_enabled     = true
-  aliases = ["jenkins.tdr-prototype.co.uk"]
 
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
@@ -48,10 +47,7 @@ resource "aws_cloudfront_distribution" "web_distribution" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = false
-    acm_certificate_arn = "arn:aws:acm:us-east-1:247222723249:certificate/a63d2ec7-2529-482a-a0f8-90f6e438118f"
-    minimum_protocol_version = "TLSv1.1_2016"
-    ssl_support_method = "sni-only"
+    cloudfront_default_certificate = true
   }
 
   tags = merge(

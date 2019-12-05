@@ -1,11 +1,11 @@
 data "aws_s3_bucket_object" "secrets" {
-  bucket = "tna-secrets"
+  bucket = "tdr-secrets"
   key    = "${local.environment}/secrets.yml"
 }
 
 locals {
   #Ensure that developers' workspaces always default to 'dev'
-  environment = lookup(var.workspace_to_environment_map, terraform.workspace, "dev")
+  environment = "mgmt"
   tag_prefix = var.tag_prefix
   aws_region = var.default_aws_region
   common_tags = map(
@@ -19,11 +19,11 @@ locals {
 
 terraform {
   backend "s3" {
-    bucket = "tna-jenkins-terraform-state"
-    key = "prototype-terraform-state"
+    bucket = "tdr-terraform-state-jenkins"
+    key = "jenkins-terraform-state"
     region = "eu-west-2"
     encrypt = true
-    dynamodb_table = "tna-jenkins-terraform-statelock"
+    dynamodb_table = "tdr-terraform-state-lock-jenkins"
   }
 }
 
@@ -32,33 +32,12 @@ provider "aws" {
 }
 
 
-module "ssm" {
-  source = "./modules/ssm"
-  environment = local.environment
-  secrets = local.secrets
-  fargate_security_group = module.jenkins.fargate_security_group
-  load_balancer_url = module.jenkins.load_balancer_url
-}
-
-module "caller" {
-  source = "./modules/caller"
-}
-
-module "ecs_network" {
-  source = "./modules/network"
-  common_tags = local.common_tags
-  environment = local.environment
-  app_name = "jenkins"
-}
-
 module "jenkins" {
   source = "./modules/jenkins"
   common_tags = local.common_tags
   environment = local.environment
-  role = "arn:aws:iam::${module.caller.account_id}:role/ecsTaskExecutionRole"
-  service_name = "jenkins-${local.environment}"
-  ecs_private_subnet = module.ecs_network.ecs_private_subnet
-  ecs_public_subnet = module.ecs_network.ecs_public_subnet
-  ecs_vpc = module.ecs_network.ecs_vpc
-  ecs_vpc_cidr = module.ecs_network.ecs_vpc_cidr
+  app_name = "tdr-jenkins"
+  container_name = "jenkins"
+  az_count = 2
+  secrets = local.secrets
 }
